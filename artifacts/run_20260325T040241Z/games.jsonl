@@ -1,0 +1,10 @@
+{"seed": 42, "turns": 81, "winner": "BLUE", "players": [{"color": "RED", "victory_points": 6, "won": false}, {"color": "BLUE", "victory_points": 10, "won": true}]}
+{"seed": 43, "turns": 1000, "winner": null, "players": [{"color": "RED", "victory_points": 8, "won": false}, {"color": "BLUE", "victory_points": 7, "won": false}]}
+{"seed": 44, "turns": 356, "winner": "BLUE", "players": [{"color": "BLUE", "victory_points": 10, "won": true}, {"color": "RED", "victory_points": 3, "won": false}]}
+{"seed": 45, "turns": 118, "winner": "BLUE", "players": [{"color": "BLUE", "victory_points": 10, "won": true}, {"color": "RED", "victory_points": 4, "won": false}]}
+{"seed": 46, "turns": 281, "winner": "BLUE", "players": [{"color": "RED", "victory_points": 6, "won": false}, {"color": "BLUE", "victory_points": 10, "won": true}]}
+{"seed": 47, "turns": 184, "winner": "BLUE", "players": [{"color": "BLUE", "victory_points": 10, "won": true}, {"color": "RED", "victory_points": 3, "won": false}]}
+{"seed": 48, "turns": 638, "winner": "BLUE", "players": [{"color": "BLUE", "victory_points": 10, "won": true}, {"color": "RED", "victory_points": 9, "won": false}]}
+{"seed": 49, "turns": 205, "winner": "BLUE", "players": [{"color": "RED", "victory_points": 2, "won": false}, {"color": "BLUE", "victory_points": 10, "won": true}]}
+{"seed": 50, "turns": 423, "winner": "RED", "players": [{"color": "BLUE", "victory_points": 2, "won": false}, {"color": "RED", "victory_points": 10, "won": true}]}
+{"seed": 51, "turns": 860, "winner": "RED", "players": [{"color": "RED", "victory_points": 10, "won": true}, {"color": "BLUE", "victory_points": 8, "won": false}]}
