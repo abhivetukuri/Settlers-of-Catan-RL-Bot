@@ -6,6 +6,7 @@ from catanatron.game import Game
 from catanatron.models.player import Color
 
 from src.bots.factory import build_bot
+from src.bots.mcts_bot import MCTSConfig
 from src.config import MatchConfig
 from src.eval.metrics import compute_metrics
 from src.representations.action_encoder import encode_legal_actions
@@ -44,12 +45,21 @@ def capture_representation_snapshot(bot_a: str, bot_b: str, seed: int) -> Repres
     )
 
 
-def run_match_series(bot_a: str, bot_b: str, config: MatchConfig) -> MatchRunOutput:
+def run_match_series(
+    bot_a: str,
+    bot_b: str,
+    config: MatchConfig,
+    *,
+    mcts_config: MCTSConfig | None = None,
+) -> MatchRunOutput:
     red, blue = _default_colors()
     game_results: list[GameResult] = []
     for game_idx in range(config.num_games):
         seed = config.base_seed + game_idx
-        players = [build_bot(bot_a, red), build_bot(bot_b, blue)]
+        players = [
+            build_bot(bot_a, red, mcts_config=mcts_config),
+            build_bot(bot_b, blue, mcts_config=mcts_config),
+        ]
         result = run_game(
             players=players,
             seed=seed,
@@ -62,3 +72,4 @@ def run_match_series(bot_a: str, bot_b: str, config: MatchConfig) -> MatchRunOut
     summary["bot_mapping"] = {red.value: bot_a, blue.value: bot_b}
     snapshot = capture_representation_snapshot(bot_a, bot_b, config.base_seed)
     return MatchRunOutput(game_results=game_results, summary=summary, representation_snapshot=snapshot)
+

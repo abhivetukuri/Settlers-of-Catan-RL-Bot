@@ -4,29 +4,35 @@ import argparse
 from dataclasses import asdict
 from pathlib import Path
 
+from src.bots.mcts_bot import MCTSConfig
 from src.config import MatchConfig
 from src.eval.match_runner import run_match_series
 from src.logging_utils import run_directory, write_game_results_jsonl, write_summary_json
 
+BOT_CHOICES = ["random", "greedy", "heuristic", "mcts"]
+
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run seeded Catanatron baseline bot matches.")
-    parser.add_argument("--bot-a", choices=["random", "greedy", "heuristic"], required=True)
-    parser.add_argument("--bot-b", choices=["random", "greedy", "heuristic"], required=True)
+    parser = argparse.ArgumentParser(description="Run seeded Catanatron bot matches.")
+    parser.add_argument("--bot-a", choices=BOT_CHOICES, required=True)
+    parser.add_argument("--bot-b", choices=BOT_CHOICES, required=True)
     parser.add_argument("--num-games", type=int, default=20)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--artifacts-dir", type=str, default="artifacts")
+    parser.add_argument("--mcts-iterations", type=int, default=100,
+                        help="Number of MCTS iterations per decision (default: 100)")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+    mcts_config = MCTSConfig(num_iterations=args.mcts_iterations)
     config = MatchConfig(
         num_games=args.num_games,
         base_seed=args.seed,
         artifacts_dir=Path(args.artifacts_dir),
     )
-    output = run_match_series(args.bot_a, args.bot_b, config)
+    output = run_match_series(args.bot_a, args.bot_b, config, mcts_config=mcts_config)
 
     out_dir = run_directory(config.artifacts_dir)
     write_game_results_jsonl(out_dir / "games.jsonl", output.game_results)
