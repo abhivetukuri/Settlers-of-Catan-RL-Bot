@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 
 from catanatron.game import Game
 from catanatron.models.player import Color
@@ -51,14 +52,15 @@ def run_match_series(
     config: MatchConfig,
     *,
     mcts_config: MCTSConfig | None = None,
+    checkpoint_path: str | Path | None = None,
 ) -> MatchRunOutput:
     red, blue = _default_colors()
     game_results: list[GameResult] = []
     for game_idx in range(config.num_games):
         seed = config.base_seed + game_idx
         players = [
-            build_bot(bot_a, red, mcts_config=mcts_config),
-            build_bot(bot_b, blue, mcts_config=mcts_config),
+            build_bot(bot_a, red, mcts_config=mcts_config, checkpoint_path=checkpoint_path),
+            build_bot(bot_b, blue, mcts_config=mcts_config, checkpoint_path=checkpoint_path),
         ]
         result = run_game(
             players=players,
@@ -72,4 +74,3 @@ def run_match_series(
     summary["bot_mapping"] = {red.value: bot_a, blue.value: bot_b}
     snapshot = capture_representation_snapshot(bot_a, bot_b, config.base_seed)
     return MatchRunOutput(game_results=game_results, summary=summary, representation_snapshot=snapshot)
-
